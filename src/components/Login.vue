@@ -12,13 +12,17 @@
       }
     },
     async mounted() {
-      let data = await this.$request({
+      /*let data = await this.$request({
         methods: 'GET',
         url: '/login',
         data: {
           name: 'Jack'
         }
-      })
+      })*/
+      this.$request.get('/login', {name: 'retro'})
+      this.$storage.setItem('name','retro')
+      console.log(this.$storage.getItem('name'))
+      // console.log(this.$storage.getStorage())
     }
   }
 </script>

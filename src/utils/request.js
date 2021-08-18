@@ -45,19 +45,29 @@ service.interceptors.response.use(req => {
  * @param {*} options 请求配置
  * @returns {AxiosPromise}
  */
-function request(options){
+function request(options) {
     options.method = options.method || 'GET'
-    if(options.method.toLocaleLowerCase() === 'get'){
+    if (options.method.toLocaleLowerCase() === 'get') {
         options.params = options.data
     }
 
-    if(config.env === 'prod'){
+    if (config.env === 'prod') {
         service.defaults.baseURL = config.baseApi
-    }else{
-        service.defaults.baseURL = config.mock? config.mockApi:config.baseApi
+    } else {
+        service.defaults.baseURL = config.mock ? config.mockApi : config.baseApi
     }
 
     return service(options)
 }
 
+['get', 'post'].forEach(item => {
+    request[item] = (url, data, options) => {
+        return request({
+            url,
+            data,
+            method: item,
+            ...options
+        })
+    }
+})
 export default request

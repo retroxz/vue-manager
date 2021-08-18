@@ -17,5 +17,6 @@ export default {
     env: 'dev',
     mock: true,
     baseApi: '',
+    nameSpace: 'manager',
     ...EnvConfig[env]
 }
